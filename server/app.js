@@ -1,14 +1,20 @@
+require('dotenv').config()
+
 const express = require('express'),
   app = express(),
   cors = require('cors'),
   errorHandler = require('./handlers/error'),
   PORT = process.env.PORT || 5000,
-  pool = require('./db')
+  pool = require('./db'),
+  authRoutes = require('./routes/authRoutes')
 
 // middlewares
 app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
+
+// ROUTES
+app.use('/auth', authRoutes)
 
 // temporary routes
 app.get('/', async (req, res) => {
