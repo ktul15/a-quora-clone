@@ -14,10 +14,12 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
 // ROUTES
+
+// auth routes
 app.use('/auth', authRoutes)
 
 // temporary routes
-app.get('/', async (req, res) => {
+app.get('/temp/get-all', async (req, res) => {
   try {
     const allUsers = await pool.query('SELECT * FROM users')
     res.json(allUsers.rows)
@@ -26,7 +28,7 @@ app.get('/', async (req, res) => {
   }
 })
 
-app.delete('/:id', async (req, res) => {
+app.delete('/temp/delete/:id', async (req, res) => {
   try {
     const allUsers = await pool.query('DELETE FROM users WHERE user_id = $1', [req.params.id])
     res.json(allUsers.rows)
